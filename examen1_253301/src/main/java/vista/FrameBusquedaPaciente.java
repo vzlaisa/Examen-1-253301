@@ -4,6 +4,11 @@
  */
 package vista;
 
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 /**
  *
  * @author rocha
@@ -17,7 +22,13 @@ public class FrameBusquedaPaciente extends javax.swing.JFrame {
      */
     public FrameBusquedaPaciente() {
         initComponents();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        
         mediador = MediadorFlujo.getInstance();
+        
+        configurarListeners();
     }
 
     /**
@@ -32,7 +43,7 @@ public class FrameBusquedaPaciente extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtNSS = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -58,12 +69,6 @@ public class FrameBusquedaPaciente extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel3.setText("Ingrese su Número de Seguridad Social (NSS)");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel4.setText("1. Búsqueda");
 
@@ -71,6 +76,7 @@ public class FrameBusquedaPaciente extends javax.swing.JFrame {
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setText("Buscar");
+        btnBuscar.setEnabled(false);
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
@@ -187,7 +193,7 @@ public class FrameBusquedaPaciente extends javax.swing.JFrame {
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel4)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTextField1)
+                                        .addComponent(txtNSS)
                                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGap(33, 33, 33)
                                 .addComponent(btnBuscar))
@@ -213,7 +219,7 @@ public class FrameBusquedaPaciente extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNSS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar))
                 .addGap(9, 9, 9)
                 .addComponent(jLabel1)
@@ -244,10 +250,6 @@ public class FrameBusquedaPaciente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
         siguiente();
@@ -295,7 +297,37 @@ public class FrameBusquedaPaciente extends javax.swing.JFrame {
             }
         });
     }
-    
+
+    private void configurarListeners() {
+        // Para habilitar o deshabilitar el botón de buscar
+        txtNSS.getDocument().addDocumentListener(toDocumentListener(() -> {
+            String texto = txtNSS.getText();
+            btnBuscar.setEnabled(texto.length() >= 7 && texto.length() <= 8);
+        }));
+        
+        
+    }
+
+    // Helper para no repetir DocumentListener
+    private DocumentListener toDocumentListener(Runnable r) {
+        return new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                r.run();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                r.run();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                r.run();
+            }
+        };
+    }
+
     private void siguiente() {
         this.dispose();
         mediador.abrirRegistrarCitaFrm();
@@ -323,6 +355,6 @@ public class FrameBusquedaPaciente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtNSS;
     // End of variables declaration//GEN-END:variables
 }

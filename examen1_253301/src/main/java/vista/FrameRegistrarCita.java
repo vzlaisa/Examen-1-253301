@@ -4,12 +4,14 @@
  */
 package vista;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author rocha
  */
 public class FrameRegistrarCita extends javax.swing.JFrame {
-    
+
     private MediadorFlujo mediador;
 
     /**
@@ -17,7 +19,10 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
      */
     public FrameRegistrarCita() {
         initComponents();
-        
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(true);
+
         mediador = MediadorFlujo.getInstance();
     }
 
