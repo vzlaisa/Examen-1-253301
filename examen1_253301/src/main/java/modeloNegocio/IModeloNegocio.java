@@ -4,7 +4,7 @@
  */
 package modeloNegocio;
 
-import dto.MedicoConCitasDTO;
+import dto.HorarioCitaDTO;
 import java.util.List;
 
 /**
@@ -18,6 +18,8 @@ public interface IModeloNegocio {
     public List<Medico> obtenerMedicos();
 
     public Medico obtenerMedico(String cedula);
+
+    public List<HorarioCitaDTO> obtenerCitasDisponibles(String cedula);
 
     public CitaMedica registrarCita(CitaMedica cita);
 }

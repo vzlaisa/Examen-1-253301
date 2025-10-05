@@ -4,10 +4,56 @@
  */
 package modeloVista;
 
+import dto.CitaMedicaDTO;
+import dto.MedicoDTO;
+import dto.PacienteDTO;
+
 /**
  *
  * @author rocha
  */
 public class SesionSeleccion {
+    private PacienteDTO paciente;
+    private MedicoDTO medico;
+    private CitaMedicaDTO cita;
+    
+    private static SesionSeleccion instance;
+    
+    private SesionSeleccion() {
+        
+    }
+    
+    public static SesionSeleccion getInstance() {
+        if (instance == null) {
+            instance = new SesionSeleccion();
+        }
+        
+        return instance;
+    }
+
+    public PacienteDTO getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(PacienteDTO paciente) {
+        this.paciente = paciente;
+    }
+
+    public MedicoDTO getMedico() {
+        return medico;
+    }
+
+    public void setMedico(MedicoDTO medico) {
+        this.medico = medico;
+    }
+
+    public CitaMedicaDTO getCita() {
+        return cita;
+    }
+
+    public void setCita(CitaMedicaDTO cita) {
+        this.cita = cita;
+    }
+    
     
 }

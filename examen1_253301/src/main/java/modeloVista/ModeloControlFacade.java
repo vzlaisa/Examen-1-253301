@@ -17,24 +17,48 @@ import java.util.List;
 public class ModeloControlFacade implements IModeloControl {
 
     private ModeloControlImp modeloControlImp;
+    private SesionSeleccion sesion;
     
-    public ModeloControlFacade() {
+    private static ModeloControlFacade instance;
+    
+    private ModeloControlFacade() {
         this.modeloControlImp = new ModeloControlImp();
+        this.sesion = SesionSeleccion.getInstance();
+    }
+    
+    public static ModeloControlFacade getInstance() {
+        if (instance == null) {
+            instance = new ModeloControlFacade();
+        }
+        
+        return instance;
     }
     
     @Override
     public PacienteDTO obtenerPaciente(String nss) {
-        return null;
+        PacienteDTO paciente = modeloControlImp.obtenerPaciente(nss);
+        
+        if (paciente != null) {
+            sesion.setPaciente(paciente);
+        }
+        
+        return paciente;
     }
 
     @Override
     public List<MedicoDTO> obtenerMedicos() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return modeloControlImp.obtenerMedicos();
     }
 
     @Override
     public MedicoConCitasDTO obtenerMedico(String cedula) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        MedicoConCitasDTO medico = modeloControlImp.obtenerMedico(cedula);
+        
+        if (medico != null) {
+            sesion.setMedico(medico.getMedico());
+        }
+        
+        return medico;
     }
 
     @Override

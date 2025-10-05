@@ -63,6 +63,7 @@ public class ModeloNegocioImp implements IModeloNegocio {
         return cita;
     }
 
+    @Override
     public List<HorarioCitaDTO> obtenerCitasDisponibles(String cedula) {
         List<HorarioCitaDTO> disponibles = new ArrayList<>();
 
