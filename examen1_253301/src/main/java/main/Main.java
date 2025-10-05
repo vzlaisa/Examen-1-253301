@@ -4,13 +4,17 @@
 
 package main;
 
+import javax.swing.JFrame;
+import vista.FrameBusquedaPaciente;
+
 /**
  *
  * @author rocha
  */
-public class Mavenproject1 {
+public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        JFrame frame = new FrameBusquedaPaciente();
+        frame.setVisible(true);
     }
 }
