@@ -9,7 +9,7 @@ import java.time.LocalTime;
 
 /**
  *
- * @author rocha
+ * @author 00000253301 Isabel Valenzuela Rocha
  */
 public class HorarioConsulta {
     private DayOfWeek dia;
