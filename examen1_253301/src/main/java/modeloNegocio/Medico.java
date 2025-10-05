@@ -58,6 +58,10 @@ public class Medico extends Persona {
     public void setHorarios(List<HorarioConsulta> horarios) {
         this.horarios = horarios;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Medico{" + "cedula=" + cedula + ", especialidad=" + especialidad + ", consultorio=" + consultorio + '}';
+    }
     
 }

@@ -4,7 +4,6 @@
  */
 package mappers;
 
-import dto.MedicoConCitasDTO;
 import dto.MedicoDTO;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,11 +17,25 @@ public class MedicoMapper {
     
     public static MedicoDTO toDTO(Medico medico) {
         return new MedicoDTO(
-                medico.getNombreCompleto(), 
+                medico.getNombre(),
+                medico.getApellidoPaterno(),
+                medico.getApellidoMaterno(),
                 medico.getCedula(), 
                 medico.getEspecialidad(), 
                 medico.getConsultorio(), 
                 HorarioMapper.toDTOList(medico.getHorarios()));
+    }
+    
+    public static Medico toEntity(MedicoDTO medico) {
+        return new Medico(
+                medico.getCedula(),
+                medico.getEspecialidad(),
+                medico.getConsultorio(),
+                HorarioMapper.toEntityList(medico.getHorarios()),
+                medico.getNombre(),
+                medico.getApellidoPaterno(),
+                medico.getApellidoMaterno()
+        );
     }
     
     public static List<MedicoDTO> toDTOList(List<Medico> medicos) {

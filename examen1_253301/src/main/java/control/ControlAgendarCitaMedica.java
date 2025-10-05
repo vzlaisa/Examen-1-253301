@@ -4,6 +4,8 @@
  */
 package control;
 
+import dto.CitaMedicaDTO;
+import dto.HorarioCitaDTO;
 import dto.MedicoConCitasDTO;
 import dto.MedicoDTO;
 import dto.PacienteDTO;
@@ -38,6 +40,14 @@ public class ControlAgendarCitaMedica {
     public static MedicoConCitasDTO obtenerMedico(String cedula) {
         if (modeloControl != null) {
             return modeloControl.obtenerMedico(cedula);
+        } else {
+            throw new IllegalStateException("ModeloControl no inicializado");
+        }
+    }
+    
+    public static CitaMedicaDTO registrarCita(HorarioCitaDTO horario) {
+        if (modeloControl != null) {
+            return modeloControl.registrarCita(horario);
         } else {
             throw new IllegalStateException("ModeloControl no inicializado");
         }

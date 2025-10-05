@@ -9,25 +9,49 @@ package dto;
  * @author rocha
  */
 public class PacienteDTO {
-    private String nombreCompleto;
+    private String nombre;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
     private String nss;
     private String curp;
 
     public PacienteDTO() {
     }
 
-    public PacienteDTO(String nombreCompleto, String nss, String curp) {
-        this.nombreCompleto = nombreCompleto;
+    public PacienteDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String nss, String curp) {
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
         this.nss = nss;
         this.curp = curp;
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public String getNombreCompleto() {
+        return nombre + " " + apellidoPaterno + " " + apellidoMaterno;
     }
 
     public String getNss() {

@@ -15,9 +15,21 @@ public class PacienteMapper {
     
     public static PacienteDTO toDTO(Paciente paciente) {
         return new PacienteDTO(
-                paciente.getNombreCompleto(),
+                paciente.getNombre(),
+                paciente.getApellidoPaterno(),
+                paciente.getApellidoMaterno(),
                 paciente.getNss(),
                 paciente.getCurp());
+    }
+    
+    public static Paciente toEntity(PacienteDTO paciente) {
+        return new Paciente(
+                paciente.getNss(),
+                paciente.getCurp(),
+                paciente.getNombre(),
+                paciente.getApellidoPaterno(),
+                paciente.getApellidoMaterno()
+        );
     }
 
 }

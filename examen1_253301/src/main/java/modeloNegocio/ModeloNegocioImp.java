@@ -12,12 +12,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author rocha
  */
 public class ModeloNegocioImp implements IModeloNegocio {
+
+    private static final Logger LOG = Logger.getLogger(ModeloNegocioImp.class.getName());
+    
 
     // Listas mock a modo de simulación de base de datos
     private List<Paciente> pacientes;
@@ -34,6 +39,7 @@ public class ModeloNegocioImp implements IModeloNegocio {
     public Paciente obtenerPaciente(String nss) {
         for (Paciente paciente : pacientes) {
             if (paciente.getNss().equals(nss)) {
+                LOG.log(Level.INFO, "Paciente obtenido: {0}", paciente.toString());
                 return paciente;
             }
         }
@@ -50,6 +56,7 @@ public class ModeloNegocioImp implements IModeloNegocio {
     public Medico obtenerMedico(String cedula) {
         for (Medico medico : medicos) {
             if (medico.getCedula().equals(cedula)) {
+                LOG.log(Level.INFO, "Médico obtenido: {0}", medico.toString());
                 return medico;
             }
         }
@@ -60,6 +67,7 @@ public class ModeloNegocioImp implements IModeloNegocio {
     @Override
     public CitaMedica registrarCita(CitaMedica cita) {
         citas.add(cita);
+        LOG.log(Level.INFO, "Cita registrada: {0}", cita.toString());
         return cita;
     }
 

@@ -4,11 +4,13 @@
  */
 package modeloVista;
 
+import dto.CitaMedicaDTO;
 import dto.HorarioCitaDTO;
 import dto.MedicoConCitasDTO;
 import dto.MedicoDTO;
 import dto.PacienteDTO;
 import java.util.List;
+import mappers.CitaMapper;
 import mappers.MedicoMapper;
 import mappers.PacienteMapper;
 import modeloNegocio.IModeloNegocio;
@@ -46,5 +48,9 @@ public class ModeloControlImp {
         List<HorarioCitaDTO> citas = modeloNegocio.obtenerCitasDisponibles(cedula);
         
         return new MedicoConCitasDTO(medico, citas);
+    }
+    
+    public CitaMedicaDTO registrarCita(CitaMedicaDTO cita) {
+        return CitaMapper.toDTO(modeloNegocio.registrarCita(CitaMapper.toEntity(cita)));
     }
 }

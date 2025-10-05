@@ -5,6 +5,7 @@
 package mappers;
 
 import dto.HorarioConsultaDTO;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import modeloNegocio.HorarioConsulta;
@@ -23,9 +24,22 @@ public class HorarioMapper {
         );
     }
     
+    public static HorarioConsulta toEntity(HorarioConsultaDTO horarioConsulta) {
+        return new HorarioConsulta(
+                horarioConsulta.getDia(), 
+                horarioConsulta.getHoraInicio(), 
+                horarioConsulta.getHoraFin());
+    }
+    
     public static List<HorarioConsultaDTO> toDTOList(List<HorarioConsulta> horarios) {
         return horarios.stream()
                 .map(horario -> toDTO(horario))
+                .collect(Collectors.toList());
+    }
+    
+    public static List<HorarioConsulta> toEntityList(List<HorarioConsultaDTO> horarios) {
+        return horarios.stream()
+                .map(horario -> toEntity(horario))
                 .collect(Collectors.toList());
     }
 }

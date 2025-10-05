@@ -4,6 +4,7 @@
  */
 package modeloVista;
 
+import dto.CitaMedicaDTO;
 import dto.HorarioCitaDTO;
 import dto.MedicoConCitasDTO;
 import dto.MedicoDTO;
@@ -22,5 +23,5 @@ public interface IModeloControl {
 
     public MedicoConCitasDTO obtenerMedico(String cedula);
 
-    public boolean registrarCita(HorarioCitaDTO horario);
+    public CitaMedicaDTO registrarCita(HorarioCitaDTO horario);
 }

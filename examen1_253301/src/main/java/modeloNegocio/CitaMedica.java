@@ -58,6 +58,11 @@ public class CitaMedica {
     public void setHora(LocalTime hora) {
         this.hora = hora;
     }
+
+    @Override
+    public String toString() {
+        return "CitaMedica{" + "paciente=" + paciente + ", medico=" + medico + ", fecha=" + fecha + ", hora=" + hora + '}';
+    }
     
     
 }

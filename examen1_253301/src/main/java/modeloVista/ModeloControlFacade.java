@@ -4,6 +4,7 @@
  */
 package modeloVista;
 
+import dto.CitaMedicaDTO;
 import dto.HorarioCitaDTO;
 import dto.MedicoConCitasDTO;
 import dto.MedicoDTO;
@@ -62,10 +63,12 @@ public class ModeloControlFacade implements IModeloControl {
     }
 
     @Override
-    public boolean registrarCita(HorarioCitaDTO horario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public CitaMedicaDTO registrarCita(HorarioCitaDTO horario) {
+        PacienteDTO paciente = sesion.getPaciente();
+        MedicoDTO medico = sesion.getMedico();
+        CitaMedicaDTO cita = new CitaMedicaDTO(paciente, medico, horario.getFecha(), horario.getHora());
+        
+        return modeloControlImp.registrarCita(cita);
     }
-    
-    
     
 }

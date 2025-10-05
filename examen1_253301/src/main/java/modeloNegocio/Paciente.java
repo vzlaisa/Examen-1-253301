@@ -36,6 +36,11 @@ public class Paciente extends Persona {
     public void setCurp(String curp) {
         this.curp = curp;
     }
+
+    @Override
+    public String toString() {
+        return "Paciente{" + "nss=" + nss + ", curp=" + curp + '}';
+    }
     
     
 }

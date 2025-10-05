@@ -11,7 +11,9 @@ import java.util.List;
  * @author rocha
  */
 public class MedicoDTO {
-    private String nombreCompleto;
+    private String nombre;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
     private String cedula;
     private String especialidad;
     private String consultorio;
@@ -20,21 +22,44 @@ public class MedicoDTO {
     public MedicoDTO() {
     }
 
-    public MedicoDTO(String nombreCompleto, String cedula, String especialidad, String consultorio, List<HorarioConsultaDTO> horarios) {
-        this.nombreCompleto = nombreCompleto;
+    public MedicoDTO(String nombre, String apellidoPaterno, String apellidoMaterno, String cedula, String especialidad, String consultorio, List<HorarioConsultaDTO> horarios) {
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
         this.cedula = cedula;
         this.especialidad = especialidad;
         this.consultorio = consultorio;
         this.horarios = horarios;
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public String getNombreCompleto() {
+        return nombre + " " + apellidoPaterno + " " + apellidoMaterno;
+    }
+
 
     public String getCedula() {
         return cedula;

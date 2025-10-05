@@ -4,7 +4,6 @@
  */
 package modeloVista;
 
-import dto.CitaMedicaDTO;
 import dto.MedicoDTO;
 import dto.PacienteDTO;
 
@@ -15,7 +14,6 @@ import dto.PacienteDTO;
 public class SesionSeleccion {
     private PacienteDTO paciente;
     private MedicoDTO medico;
-    private CitaMedicaDTO cita;
     
     private static SesionSeleccion instance;
     
@@ -46,14 +44,5 @@ public class SesionSeleccion {
     public void setMedico(MedicoDTO medico) {
         this.medico = medico;
     }
-
-    public CitaMedicaDTO getCita() {
-        return cita;
-    }
-
-    public void setCita(CitaMedicaDTO cita) {
-        this.cita = cita;
-    }
-    
     
 }

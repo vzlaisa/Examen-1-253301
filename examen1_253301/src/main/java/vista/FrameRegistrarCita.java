@@ -5,14 +5,17 @@
 package vista;
 
 import control.ControlAgendarCitaMedica;
+import dto.CitaMedicaDTO;
 import dto.HorarioCitaDTO;
 import dto.HorarioConsultaDTO;
 import dto.MedicoConCitasDTO;
 import dto.MedicoDTO;
+import dto.PacienteDTO;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.time.DayOfWeek;
-import java.util.ArrayList;
-import java.util.EnumMap;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +23,8 @@ import java.util.stream.Collectors;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -42,6 +47,8 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
         setVisible(true);
         
         panelInfo.setVisible(false);
+        lblMensajeExito.setVisible(false);
+        lblRedireccionar.setVisible(false);
         
         mediador = MediadorFlujo.getInstance();
         
@@ -94,18 +101,20 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
         panelHorarioMedico = new javax.swing.JPanel();
         panelInfoCita = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
+        lblNombrePaciente = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
+        lblCurpPaciente = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
+        lblFechaHoraCita = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
-        jLabel34 = new javax.swing.JLabel();
+        lblNombreMedicoCita = new javax.swing.JLabel();
+        lblConsultorioCita = new javax.swing.JLabel();
+        lblNssPaciente = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
+        lblMensajeExito = new javax.swing.JLabel();
+        lblRedireccionar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -213,7 +222,7 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
 
         panelSeleccionarCita.add(panelSinCitas, "NOCITAS");
@@ -244,6 +253,11 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
         btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrar.setText("Registrar cita");
         btnRegistrar.setEnabled(false);
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelCitasLayout = new javax.swing.GroupLayout(panelCitas);
         panelCitas.setLayout(panelCitasLayout);
@@ -272,7 +286,7 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         panelSeleccionarCita.add(panelCitas, "CITAS");
@@ -378,14 +392,14 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
         jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel23.setText("Nombre del paciente");
 
-        jLabel24.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel24.setText("Aa");
+        lblNombrePaciente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNombrePaciente.setText("Aa");
 
         jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel25.setText("CURP del paciente");
 
-        jLabel26.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel26.setText("Aa");
+        lblCurpPaciente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblCurpPaciente.setText("Aa");
 
         jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel27.setText("NSS del paciente");
@@ -393,8 +407,8 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
         jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel28.setText("Consultorio");
 
-        jLabel29.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel29.setText("Aa");
+        lblFechaHoraCita.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblFechaHoraCita.setText("Aa");
 
         jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel30.setText("Detalles de la cita");
@@ -402,14 +416,14 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
         jLabel31.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel31.setText("Nombre del médico");
 
-        jLabel32.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel32.setText("Aa");
+        lblNombreMedicoCita.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNombreMedicoCita.setText("Aa");
 
-        jLabel33.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel33.setText("Aa");
+        lblConsultorioCita.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblConsultorioCita.setText("Aa");
 
-        jLabel34.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel34.setText("Aa");
+        lblNssPaciente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNssPaciente.setText("Aa");
 
         jLabel35.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel35.setText("Fecha y hora");
@@ -425,17 +439,17 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
                     .addGroup(panelInfoCitaLayout.createSequentialGroup()
                         .addGroup(panelInfoCitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel23)
-                            .addComponent(jLabel24)
+                            .addComponent(lblNombrePaciente)
                             .addComponent(jLabel25)
-                            .addComponent(jLabel26)
+                            .addComponent(lblCurpPaciente)
                             .addComponent(jLabel27)
-                            .addComponent(jLabel34))
+                            .addComponent(lblNssPaciente))
                         .addGap(49, 49, 49)
                         .addGroup(panelInfoCitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel29)
+                            .addComponent(lblFechaHoraCita)
                             .addComponent(jLabel35)
-                            .addComponent(jLabel33)
-                            .addComponent(jLabel32)
+                            .addComponent(lblConsultorioCita)
+                            .addComponent(lblNombreMedicoCita)
                             .addComponent(jLabel31)
                             .addComponent(jLabel28))))
                 .addGap(19, 19, 19))
@@ -445,34 +459,42 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
             .addGroup(panelInfoCitaLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel30)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(panelInfoCitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23)
                     .addComponent(jLabel31))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelInfoCitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel24)
-                    .addComponent(jLabel32))
+                    .addComponent(lblNombrePaciente)
+                    .addComponent(lblNombreMedicoCita))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelInfoCitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel25)
                     .addComponent(jLabel28))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelInfoCitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel26)
-                    .addComponent(jLabel33))
+                    .addComponent(lblCurpPaciente)
+                    .addComponent(lblConsultorioCita))
                 .addGap(18, 18, 18)
                 .addGroup(panelInfoCitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel27)
                     .addComponent(jLabel35))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelInfoCitaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel34)
-                    .addComponent(jLabel29))
+                    .addComponent(lblNssPaciente)
+                    .addComponent(lblFechaHoraCita))
                 .addGap(96, 96, 96))
         );
 
         panelInfo.add(panelInfoCita, "CITA");
+
+        lblMensajeExito.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblMensajeExito.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMensajeExito.setText("Aa");
+
+        lblRedireccionar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblRedireccionar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblRedireccionar.setText("Redireccionando al menú principal...");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -495,8 +517,15 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
                                     .addComponent(jLabel13))
                                 .addComponent(panelSeleccionarCita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, Short.MAX_VALUE)
-                        .addComponent(panelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(panelInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblMensajeExito, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(53, 53, 53)
+                                .addComponent(lblRedireccionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(498, 498, 498))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -507,7 +536,9 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel13)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(lblMensajeExito))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -515,10 +546,12 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
                         .addGap(36, 36, 36)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panelSeleccionarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(panelSeleccionarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 40, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblRedireccionar))
+                        .addGap(0, 28, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(panelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -541,6 +574,10 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         volver();
     }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        registrarCita();
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void configurarTablas() {
         tblModelMedicos = new DefaultTableModel(new Object[]{"N. cédula profesional", "Nombre"}, 0) {
@@ -574,6 +611,7 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
             if (!e.getValueIsAdjusting()) {
                 // Si hay fila seleccionada (>=0), habilitar el botón
                 btnRegistrar.setEnabled(tblCitas.getSelectedRow() != -1);
+                
             }
         });
 
@@ -633,7 +671,6 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
         lblCedulaMedico.setText(medico.getCedula());
         lblConsultorioMedico.setText(medico.getConsultorio());
         
-        
         mostrarHorario(medico.getHorarios());
 
         cl.show(panelInfo, "MEDICO");
@@ -678,10 +715,74 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
         return ControlAgendarCitaMedica.obtenerMedico(cedula);
     }
     
+    private void registrarCita() {
+        int opcion = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea registrar la cita médica?", "Confirmación", JOptionPane.YES_NO_OPTION);
+        if (opcion != JOptionPane.YES_OPTION) {
+            return;
+        }
+        
+        int fila = tblCitas.getSelectedRow();
+        LocalDate fecha = (LocalDate) tblModelCitas.getValueAt(fila, 0);
+        LocalTime hora = (LocalTime) tblModelCitas.getValueAt(fila, 1);
+        
+        HorarioCitaDTO horario = new HorarioCitaDTO(fecha, hora);
+        CitaMedicaDTO citaRegistrada = ControlAgendarCitaMedica.registrarCita(horario);
+        
+        if (citaRegistrada == null) {
+            JOptionPane.showMessageDialog(this, "No fue posible registrar la cita. Intenta más tarde.", "Error", JOptionPane.ERROR_MESSAGE);
+            mostrarInicio();
+        }
+        
+        btnRegistrar.setVisible(false);
+        mostrarInfoCita(citaRegistrada);
+        mostrarMensajeExito();
+        programarSalida();
+    }
+    
+    private void mostrarInfoCita(CitaMedicaDTO cita) {
+        CardLayout cl = (CardLayout) panelInfo.getLayout();
+        
+        PacienteDTO paciente = cita.getPaciente();
+        MedicoDTO medico = cita.getMedico();
+        
+        lblNombrePaciente.setText(paciente.getNombreCompleto());
+        lblCurpPaciente.setText(paciente.getCurp());
+        lblNssPaciente.setText(paciente.getNss());
+        lblNombreMedicoCita.setText(medico.getNombre());
+        lblConsultorioCita.setText(medico.getConsultorio());
+        lblFechaHoraCita.setText(cita.getFecha().toString() + " " + cita.getHora().toString());
+        
+        cl.show(panelInfo, "CITA");
+    }
+    
+    private void mostrarMensajeExito() {
+        lblMensajeExito.setText("CITA MÉDICA AGENDADA CON ÉXITO");
+        lblMensajeExito.setForeground(Color.GREEN);
+        lblMensajeExito.setVisible(true);
+        
+    }
+
+    // Mock para redireccionar a otra ventana
+    private void programarSalida() {
+        // Programar redirección después de 5 segundos (3000 ms)
+        Timer timer = new Timer(5000, e -> {
+            mostrarInicio();
+        });
+        timer.setRepeats(false); // que solo se ejecute una vez
+        timer.start();
+        
+        lblRedireccionar.setVisible(true);
+    }
+
     private void volver() {
         this.dispose();
         mediador.abrirBusquedaPacienteFrm();
     }
+    
+    private void mostrarInicio() {
+        System.exit(0); // En un flujo normal, llevaría al inicio de la aplicación
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrar;
@@ -697,18 +798,12 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -718,9 +813,17 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCedulaMedico;
+    private javax.swing.JLabel lblConsultorioCita;
     private javax.swing.JLabel lblConsultorioMedico;
+    private javax.swing.JLabel lblCurpPaciente;
     private javax.swing.JLabel lblEspecialidadMedico;
+    private javax.swing.JLabel lblFechaHoraCita;
+    private javax.swing.JLabel lblMensajeExito;
     private javax.swing.JLabel lblNombreMedico;
+    private javax.swing.JLabel lblNombreMedicoCita;
+    private javax.swing.JLabel lblNombrePaciente;
+    private javax.swing.JLabel lblNssPaciente;
+    private javax.swing.JLabel lblRedireccionar;
     private javax.swing.JPanel panelCitas;
     private javax.swing.JPanel panelHorarioMedico;
     private javax.swing.JPanel panelInfo;
