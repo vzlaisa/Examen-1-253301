@@ -748,7 +748,7 @@ public class FrameRegistrarCita extends javax.swing.JFrame {
         lblNombrePaciente.setText(paciente.getNombreCompleto());
         lblCurpPaciente.setText(paciente.getCurp());
         lblNssPaciente.setText(paciente.getNss());
-        lblNombreMedicoCita.setText(medico.getNombre());
+        lblNombreMedicoCita.setText(medico.getNombreCompleto());
         lblConsultorioCita.setText(medico.getConsultorio());
         lblFechaHoraCita.setText(cita.getFecha().toString() + " " + cita.getHora().toString());
         
