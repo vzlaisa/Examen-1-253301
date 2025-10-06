@@ -16,25 +16,36 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author rocha
+ * Implementación del modelo de negocio.
+ * Simula la gestión de pacientes, médicos y citas médicas
+ * usando listas en memoria en lugar de una base de datos real.
+ * 
+ * @author 0000253301 Isabel Valenzuela Rocha
  */
 public class ModeloNegocioImp implements IModeloNegocio {
 
     private static final Logger LOG = Logger.getLogger(ModeloNegocioImp.class.getName());
-    
 
     // Listas mock a modo de simulación de base de datos
     private List<Paciente> pacientes;
     private List<Medico> medicos;
     private List<CitaMedica> citas;
 
+    /**
+     * Constructor que inicializa las listas simuladas.
+     */
     public ModeloNegocioImp() {
         this.citas = new LinkedList<>();
         mockPacientes();
         mockMedicos();
     }
 
+    /**
+     * Busca y devuelve un paciente a partir de su número de seguridad social.
+     *
+     * @param nss Número de Seguridad Social del paciente.
+     * @return Paciente encontrado, o null si no existe.
+     */
     @Override
     public Paciente obtenerPaciente(String nss) {
         for (Paciente paciente : pacientes) {
@@ -47,11 +58,22 @@ public class ModeloNegocioImp implements IModeloNegocio {
         return null;
     }
 
+    /**
+     * Obtiene la lista de todos los médicos registrados en el sistema.
+     *
+     * @return Lista de objetos Medico.
+     */
     @Override
     public List<Medico> obtenerMedicos() {
         return medicos;
     }
 
+    /**
+     * Busca y devuelve un médico a partir de su cédula profesional.
+     *
+     * @param cedula Cédula profesional del médico.
+     * @return Medico encontrado, o null si no existe.
+     */
     @Override
     public Medico obtenerMedico(String cedula) {
         for (Medico medico : medicos) {
@@ -64,6 +86,13 @@ public class ModeloNegocioImp implements IModeloNegocio {
         return null;
     }
 
+    /**
+     * Registra una cita médica en el sistema.
+     *
+     * @param cita Objeto CitaMedica que contiene la información de la cita a
+     * registrar.
+     * @return La cita médica registrada con los datos confirmados.
+     */
     @Override
     public CitaMedica registrarCita(CitaMedica cita) {
         citas.add(cita);
@@ -71,6 +100,13 @@ public class ModeloNegocioImp implements IModeloNegocio {
         return cita;
     }
 
+    /**
+     * Obtiene la lista de citas disponibles en la agenda de un médico
+     * identificado por su cédula.
+     *
+     * @param cedula Cédula profesional del médico.
+     * @return Lista de objetos HorarioCitaDTO con las citas disponibles.
+     */
     @Override
     public List<HorarioCitaDTO> obtenerCitasDisponibles(String cedula) {
         List<HorarioCitaDTO> disponibles = new ArrayList<>();
